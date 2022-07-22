@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anil Puzzel</title>
+  </head>
+  <body>
+    <style>
+      body {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        height: 100vh;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      .puzzle {
+        background-image: url("./nature.jpg");
+        width: 400px;
+        height: 400px;
+      }
+      .full-image {
+        background-image: url("./nature.jpg");
+        width: 400px;
+        height: 400px;
+      }
+      .piece-1 {
+        background-image: url("./nature.jpg");
+
+        background-position: 0px 0px;
+        border: 1px solid black;
+        width: 200px;
+        height: 200px;
+      }
+
+      .piece-2 {
+        background-image: url("./nature.jpg");
+
+        background-position: -200px 0px;
+        border: 1px solid black;
+
+        width: 200px;
+        height: 200px;
+      }
+
+      .piece-3 {
+        background-image: url("./nature.jpg");
+
+        background-position: 0px -200px;
+        border: 1px solid black;
+        width: 200px;
+        height: 200px;
+      }
+
+      .piece-4 {
+        background-image: url("./nature.jpg");
+
+        background-position: -200px -200px;
+        border: 1px solid black;
+        width: 200px;
+        height: 200px;
+      }
+
+      .container div {
+        display: inline-block;
+      }
+
+      .main-container {
+        display: flex;
+        justify-content: space-around;
+      }
+    </style>
+    <script>
+      function drag(box) {
+        console.log("debug", box);
+        box.dataTransfer.setData("text", box.target.id);
+        box.dataTransfer.setData("parent", box.path[1].id);
+      }
+
+      function drop(box) {
+        box.preventDefault();
+        var data = box.dataTransfer.getData("text");
+        var parent = box.dataTransfer.getData("parent");
+        var parentDiv = document.getElementById(parent);
+        var alreadyPresentImage = document.getElementById(box.path[0].id);
+        var newImage = document.getElementById(data);
+
+        var secondParentDiv = document.getElementById(box.path[1].id);
+        parentDiv.removeChild(newImage);
+        parentDiv.appendChild(alreadyPresentImage);
+        secondParentDiv.appendChild(newImage);
+      }
+
+      function allowDrop(box) {
+        box.preventDefault();
+      }
+    </script>
+    <div class="main-container">
+      <div>
+        <div class="container">
+          <div
+            id="piece-1-container"
+            ondrop="drop(event)"
+            ondragover="allowDrop(event)"
+          >
+            <div
+              id="piece-1"
+              class="puzzel piece-1"
+              draggable="true"
+              ondragstart="drag(event)"
+            ></div>
+          </div>
+
+          <div
+            id="piece-2-container"
+            ondrop="drop(event)"
+            ondragover="allowDrop(event)"
+          >
+            <div
+              id="piece-2"
+              class="puzzel piece-2"
+              draggable="true"
+              ondragstart="drag(event)"
+            ></div>
+          </div>
+        </div>
+        <div class="container">
+          <div
+            id="piece-3-container"
+            ondrop="drop(event)"
+            ondragover="allowDrop(event)"
+          >
+            <div
+              id="piece-3"
+              class="puzzel piece-3"
+              draggable="true"
+              ondragstart="drag(event)"
+            ></div>
+          </div>
+
+          <div
+            id="piece-4-container"
+            ondrop="drop(event)"
+            ondragover="allowDrop(event)"
+          >
+            <div
+              id="piece-4"
+              class="puzzel piece-4"
+              draggable="true"
+              ondragstart="drag(event)"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="full-image"></div>
+    </div>
+    <div style="width: 100%; display: flex; justify-content: center">
+      <a href="./puzzel.html">
+        <button
+          style="
+            width: 150px;
+            color: white;
+            background-color: green;
+            border: 1px solid black;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-radius: 10px;
+          "
+        >
+          Reset
+        </button>
+      </a>
+    </div>
+  </body>
+</html>
